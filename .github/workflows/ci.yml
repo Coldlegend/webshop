@@ -2,10 +2,10 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master", "main" ]
   pull_request:
-    branches: [ "main" ]
-
+    branches: [ "master", "main" ]
+  workflow_dispatch: # <--- EZZEL MEGJELENIK A "Run workflow" GOMB A GITHUBON!
 jobs:
   test-and-analyze:
     name: Build, Test & Sonar Analysis
