@@ -1,0 +1,46 @@
+services:
+  # 1. PostgreSQL adatbázis szerviz
+  postgres-db:
+    image: postgres:16-alpine
+    container_name: webshop-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: webshop_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+    ports:
+      - "5432:5432"
+    volumes:
+      # Perzisztens adattárolás: az adatok nem vesznek el a konténer újraindításakor
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d webshop_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # 2. Spring Boot backend alkalmazás
+  backend:
+    build:
+      context: .\
+      dockerfile: Dockerfile
+    container_name: webshop-backend
+    restart: on-failure
+    depends_on:
+      postgres-db:
+        condition: service_healthy # Megvárja, amíg az adatbázis teljesen feláll és fogad kapcsolatokat!
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/webshop_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgrespassword
+      JWT_SECRET: egyNagyonBiztonsagosFelhosTitkosKulcsLegalabb256BitHosszu123456
+  adminer:
+    image: adminer:latest
+    container_name: webshop-adminer
+    restart: always
+    ports:
+      - "8081:8080"
+volumes:
+  postgres_data:

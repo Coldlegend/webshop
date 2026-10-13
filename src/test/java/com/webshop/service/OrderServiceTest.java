@@ -44,7 +44,7 @@ public class OrderServiceTest {
         // GIVEN (Előkészítés)
         User user = new User(TEST_USER_EMAIL,"hashedpass", Role.ROLE_USER);
         Product macbook = new Product("MacBook Pro", new BigDecimal("800000"), 5);
-        // Beállítjuk a mockolt termék ID-ját
+        // Beállítjuk a mockolt termék ID-ját!
         setId(macbook, 1L);
 
         when(productRepository.findByIdWithLock(1L)).thenReturn(Optional.of(macbook));
