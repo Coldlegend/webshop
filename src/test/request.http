@@ -1,0 +1,28 @@
+### 1. Összes termék lekérése
+GET http://localhost:8080/api/products
+
+### 2. Szűrés árra és névre
+GET http://localhost:8080/api/products?name=macbook&maxPrice=1000000
+
+### 3. Termék lekérése ID alapján
+GET http://localhost:8080/api/products/1
+
+### 4. ÚJ TERMÉK LÉTREHOZÁSA (Sikeres POST kérés)
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "Keychron K2 Billentyűzet",
+  "price": 34990,
+  "stockQuantity": 8
+}
+
+### 5. HIBÁS KÉRÉS TESZTELÉSE (Validáció teszt - 400 Bad Request-et kell kapnod)
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "",
+  "price": -100,
+  "stockQuantity": -5
+}
