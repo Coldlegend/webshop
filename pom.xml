@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>21</java.version>
         <sonar.organization>Coldlegend</sonar.organization>
-        <sonar.projectKey>webshop</sonar.projectKey>
+        <sonar.projectKey>coldlegend</sonar.projectKey>
     </properties>
 
     <parent>
